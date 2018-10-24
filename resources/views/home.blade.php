@@ -1,15 +1,15 @@
 @extends('app')
 
-@section('title', 'lUrl - URL Shortener')
+@section('title', __('link.title'))
 
 @section('content')
 <form class="form-signin" action="{{ route('store') }}" method="POST">
     @csrf
-    <h1>Simplify your links</h1>
+    <h1>{{ __('link.header') }}</h1>
     <div class="input-group mb-3">
-        <input type="text" class="form-control" id="link" placeholder="Your original URL here" autofocus="autofocus" name="link" value="https://pikabu.ru/@1338">
+        <input type="text" class="form-control" id="link" placeholder="{{ __('link.input') }}" autofocus="autofocus" name="link" value="https://pikabu.ru/@1338">
         <div class="input-group-append">
-            <button class="btn btn-dark" id="submit" type="button">Shorten URL</button>
+            <button class="btn btn-dark" id="submit" type="button">{{ __('link.create') }}</button>
         </div>
     </div>
     <div id="prepend"></div>
@@ -36,7 +36,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" id="link-${data.short}" value="{{ Request::root() }}/${data.short}">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-success copy" type="button" onclick="copyText(this)" data-copy="link-${data.short}">Copy URL</button>
+                        <button class="btn btn-outline-success copy" type="button" onclick="copyText(this)" data-copy="link-${data.short}">{{ __('link.copy') }}</button>
                     </div>
                 </div>
             `);
@@ -55,8 +55,8 @@
         var copyText = document.getElementById(copy);
         copyText.select();
         document.execCommand('copy');
-        $('.copy').text('Copy URL');
-        $(element).text('Copied');
+        $('.copy').text('{{ __('link.copy') }}');
+        $(element).text('{{ __('link.copied') }}');
     }
 </script>
 @endsection
