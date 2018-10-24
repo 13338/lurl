@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/', 'LinkController')->only(['index', 'store']);
+Route::any('/{link}', 'LinkController@show')->name('show');
