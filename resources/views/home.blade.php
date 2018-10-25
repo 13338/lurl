@@ -28,7 +28,7 @@
             </label>
         </div>
         <div>
-            <input type="datetime-local" class="form-control" id="datetime" value="{{ date('Y-m-d\TH:i', strtotime(date('Y-m-d\TH:i') . " +1 week")) }}" name="expired_at" disabled>
+            <input type="datetime-local" class="form-control" id="datetime" value="{{ date('Y-m-d\TH:i', strtotime(date('Y-m-d\TH:i') . " +1 week")) }}" max="2038-01-19T03:14:07" name="expired_at" disabled>
         </div>
     </div>
     <div class="form-group" id="short-input" style="display: none">
