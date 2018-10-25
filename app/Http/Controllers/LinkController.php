@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Link;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 class LinkController extends Controller
@@ -41,6 +42,7 @@ class LinkController extends Controller
     public function show($link)
     {
         $link = Link::where('short', $link)
+            ->where('expired_at', '>=', Carbon::now())
             ->firstOrFail();
         return Redirect::to($link->link);
     }

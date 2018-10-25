@@ -14,5 +14,7 @@ return [
     'create' => 'Shorten URL',
     'copy' => 'Copy URL',
     'copied' => 'Copied',
+    'expired' => 'Expired time',
+    'short' => 'Your short link',
 
 ];
