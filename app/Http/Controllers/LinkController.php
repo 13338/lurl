@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLinkRequest;
+use App\Http\Resources\Link as LinkResource;
 use App\Link;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+
 class LinkController extends Controller
 {
 
@@ -33,7 +35,7 @@ class LinkController extends Controller
             $link->short = $this->generateRandomString(5);
         }
         $link->save();
-        return $link;
+        return new LinkResource($link);
     }
 
     /**
@@ -42,15 +44,8 @@ class LinkController extends Controller
      * @param  \App\Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function show($link)
+    public function show(Link $link)
     {
-        $link = Link::where('short', $link)
-            ->where(function($query) {
-                /** @var $query Illuminate\Database\Query\Builder  */
-                return $query->where('expired_at', '>=', Carbon::now())
-                    ->orWhereNull('expired_at');
-            })
-            ->firstOrFail();
         return Redirect::to($link->link);
     }
 

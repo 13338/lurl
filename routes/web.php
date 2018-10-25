@@ -11,5 +11,5 @@
 |
 */
 
-Route::resource('/', 'LinkController')->only(['index', 'store']);
+Route::resource('/', 'LinkController')->only(['index', 'store'])->middleware('checkphone');
 Route::any('/{link}', 'LinkController@show')->name('show');
