@@ -7,16 +7,72 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+ $('#submit').click(function(event) {
+    event.preventDefault();
+    var link = $('#link').val();
+    var form = $('#create-link-form').serialize();
+    $.ajax({
+        url: '/',
+        type: 'POST',
+        data: form,
+    })
+    .done(function(data) {
+        $('#prepend').prepend(`
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="link-${data.short}" value="${data.value}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success copy" type="button" onclick="copyText(this)" data-copy="link-${data.short}">Copy URL</button>
+                </div>
+            </div>
+        `);
+        $('#link-' + data.short).select();
+    })
+    .fail(function($xhr) {
+        var data = $xhr.responseJSON;
+        $('#errors').text('').show();
+        $.each(data.errors, function(index, val) {
+            $('#errors').append(val + '<br>');
+        });
+        $('#link').addClass('is-invalid');
+    })
+    .always(function() {
+        $('#link').val('');
+    });
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
-const app = new Vue({
-    el: '#app'
+});
+function copyText(element) {
+    var copy = $(element).data('copy');
+    var copyText = document.getElementById(copy);
+    copyText.select();
+    document.execCommand('copy');
+    $('.copy').text('Copy URL');
+    $(element).text('Copied');
+}
+$('#show-expired-input').click(function(event) {
+    $('#expired-input').fadeToggle('fast', function() {
+        $('#datetime').prop('disabled', function(i, v) {
+            return !v;
+        });
+    });
+});
+$('#show-short-input').click(function(event) {
+    $('#short-input').fadeToggle('fast', function() {
+        $('#short').prop('disabled', function(i, v) {
+            return !v;
+        });
+    });
+});
+$('.change-datetime').click(function(event) {
+    var value = $(this).data('value');
+    $('#datetime').val(value);
+});
+$('input').keydown(function(event) {
+    $('#errors').fadeOut();
+    $('#link').removeClass('is-invalid');
 });

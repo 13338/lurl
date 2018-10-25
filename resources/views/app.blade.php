@@ -16,34 +16,12 @@
 
     <title>@yield('title', config('app.name'))</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="http://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <style type="text/css">
-      html,
-      body {
-        height: 100%;
-      }
-
-      body {
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-align: center;
-        align-items: center;
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #f5f5f5;
-      }
-
-      .form-signin {
-        margin: 0 auto;
-      }
-      
-    </style>
   </head>
 
   <body class="text-center">
     @yield('content')
+    <script src="{{ asset('js/app.js') }}"></script>
   </body>
 </html>
