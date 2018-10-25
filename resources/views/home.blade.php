@@ -15,9 +15,19 @@
         <button class="btn btn-default dropdown-toggle" type="button" id="show-expired-input">{{ __('link.expired') }} <span class="caret"></span></button>
     </div>
     <div class="form-group text-left" id="expired-input" style="display: none">
-        <label for="datetime">{{ __('link.expired') }}</label>
+        <div class="btn-group btn-group-sm btn-group-toggle d-flex mb-1" data-toggle="buttons">
+            <label class="btn btn-secondary w-100 change-datetime" data-value="{{ date('Y-m-d\TH:i', strtotime(date('Y-m-d\TH:i') . " +1 day")) }}">
+                <input type="radio" class="change-datetime" autocomplete="off">1 {{ __('link.day') }}
+            </label>
+            <label class="btn btn-secondary active w-100 change-datetime" data-value="{{ date('Y-m-d\TH:i', strtotime(date('Y-m-d\TH:i') . " +1 week")) }}">
+                <input type="radio" class="" autocomplete="off" checked>1 {{ __('link.week') }}
+            </label>
+            <label class="btn btn-secondary w-100 change-datetime" data-value="{{ date('Y-m-d\TH:i', strtotime(date('Y-m-d\TH:i') . " +1 month")) }}">
+                <input type="radio" autocomplete="off">1 {{ __('link.month') }}
+            </label>
+        </div>
         <div>
-            <input type="datetime-local" class="form-control" id="datetime" value="{{ (date('Y-m-d\TH:i', strtotime(date('Y-m-d') . " +1 week"))) }}" name="expired_at" disabled>
+            <input type="datetime-local" class="form-control" id="datetime" value="{{ date('Y-m-d\TH:i', strtotime(date('Y-m-d\TH:i') . " +1 week")) }}" name="expired_at" disabled>
         </div>
     </div>
     <hr>
@@ -74,6 +84,10 @@
                 return !v;
             });
         });
+    });
+    $('.change-datetime').click(function(event) {
+        var value = $(this).data('value');
+        $('#datetime').val(value);
     });
 </script>
 @endsection

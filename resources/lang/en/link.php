@@ -17,4 +17,8 @@ return [
     'expired' => 'Expired time',
     'short' => 'Your short link',
 
+    'day' => 'Day',
+    'week' => 'Week',
+    'month' => 'Month',
+
 ];
