@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\BlackList;
 use Illuminate\Database\Migrations\CreateLinksTable;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -32,7 +33,7 @@ class StoreLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            'link' => 'required|min:1|max:'.self::MAX_URL_LENGTH,
+            'link' => ['required', 'min:1', 'max:'.self::MAX_URL_LENGTH, new BlackList],
             'short' => 'unique:links',
         ];
     }
