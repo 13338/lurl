@@ -45,8 +45,11 @@ class LinkController extends Controller
     public function show($link)
     {
         $link = Link::where('short', $link)
-            ->where('expired_at', '>=', Carbon::now())
-            ->orWhereNull('expired_at')
+            ->where(function($query) {
+                /** @var $query Illuminate\Database\Query\Builder  */
+                return $query->where('expired_at', '>=', Carbon::now())
+                    ->orWhereNull('expired_at');
+            })
             ->firstOrFail();
         return Redirect::to($link->link);
     }
