@@ -11,6 +11,9 @@
             <button class="btn btn-dark" id="submit" type="button">{{ __('link.create') }}</button>
         </div>
     </div>
+    <div class="invalid-feedback text-left mb-3" id="errors">
+        Error
+    </div>
     <div class="form-group text-left">
         <button class="btn btn-default dropdown-toggle" type="button" id="show-expired-input">{{ __('link.expired') }}</button>
         <button class="btn btn-default dropdown-toggle float-right" type="button" id="show-short-input">{{ __('link.short') }}</button>
@@ -71,7 +74,12 @@
             `);
             $('#link-' + data.short).select();
         })
-        .fail(function() {
+        .fail(function($xhr) {
+            var data = $xhr.responseJSON;
+            $('#errors').text('').show();
+            $.each(data.errors, function(index, val) {
+                $('#errors').append(val + '<br>');
+            });
             $('#link').addClass('is-invalid');
         })
         .always(function() {
@@ -104,6 +112,10 @@
     $('.change-datetime').click(function(event) {
         var value = $(this).data('value');
         $('#datetime').val(value);
+    });
+    $('input').keydown(function(event) {
+        $('#errors').fadeOut();
+        $('#link').removeClass('is-invalid');
     });
 </script>
 @endsection
