@@ -46,14 +46,6 @@ $.ajaxSetup({
     });
 
 });
-function copyText(element) {
-    var copy = $(element).data('copy');
-    var copyText = document.getElementById(copy);
-    copyText.select();
-    document.execCommand('copy');
-    $('.copy').text('Copy URL');
-    $(element).text('Copied');
-}
 $('#show-expired-input').click(function(event) {
     $('#expired-input').fadeToggle('fast', function() {
         $('#datetime').prop('disabled', function(i, v) {

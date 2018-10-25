@@ -23,5 +23,15 @@
   <body class="text-center">
     @yield('content')
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        function copyText(element) {
+            var copy = $(element).data('copy');
+            var copyText = document.getElementById(copy);
+            copyText.select();
+            document.execCommand('copy');
+            $('.copy').text('Copy URL');
+            $(element).text('Copied');
+        }
+    </script>
   </body>
 </html>
