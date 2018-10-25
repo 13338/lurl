@@ -12,7 +12,8 @@
         </div>
     </div>
     <div class="form-group text-left">
-        <button class="btn btn-default dropdown-toggle" type="button" id="show-expired-input">{{ __('link.expired') }} <span class="caret"></span></button>
+        <button class="btn btn-default dropdown-toggle" type="button" id="show-expired-input">{{ __('link.expired') }}</button>
+        <button class="btn btn-default dropdown-toggle float-right" type="button" id="show-short-input">{{ __('link.short') }}</button>
     </div>
     <div class="form-group text-left" id="expired-input" style="display: none">
         <div class="btn-group btn-group-sm btn-group-toggle d-flex mb-1" data-toggle="buttons">
@@ -28,6 +29,14 @@
         </div>
         <div>
             <input type="datetime-local" class="form-control" id="datetime" value="{{ date('Y-m-d\TH:i', strtotime(date('Y-m-d\TH:i') . " +1 week")) }}" name="expired_at" disabled>
+        </div>
+    </div>
+    <div class="form-group" id="short-input" style="display: none">
+         <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">{{ Request::root() }}/</span>
+            </div>
+            <input type="text" class="form-control" id="short" name="short" placeholder="myShortLink" disabled>
         </div>
     </div>
     <hr>
@@ -81,6 +90,13 @@
     $('#show-expired-input').click(function(event) {
         $('#expired-input').fadeToggle('fast', function() {
             $('#datetime').prop('disabled', function(i, v) {
+                return !v;
+            });
+        });
+    });
+    $('#show-short-input').click(function(event) {
+        $('#short-input').fadeToggle('fast', function() {
+            $('#short').prop('disabled', function(i, v) {
                 return !v;
             });
         });

@@ -28,7 +28,9 @@ class LinkController extends Controller
     public function store(Request $request)
     {
         $link = new Link($request->all());
-        $link->short = $this->generateRandomString(5);
+        if (!$request->short) {
+            $link->short = $this->generateRandomString(5);
+        }
         $link->save();
         return $link;
     }
