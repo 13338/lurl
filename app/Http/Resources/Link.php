@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Request;
 
 class Link extends JsonResource
 {
@@ -17,6 +18,7 @@ class Link extends JsonResource
         return [
             'link'  => $this->link,
             'short' => $this->short,
+            'value' => Request::root().'/'.$this->short,
         ];
     }
 }

@@ -66,7 +66,7 @@
         .done(function(data) {
             $('#prepend').prepend(`
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="link-${data.short}" value="{{ Request::root() }}/${data.short}">
+                    <input type="text" class="form-control" id="link-${data.short}" value="${data.value}">
                     <div class="input-group-append">
                         <button class="btn btn-outline-success copy" type="button" onclick="copyText(this)" data-copy="link-${data.short}">{{ __('link.copy') }}</button>
                     </div>
