@@ -6,7 +6,7 @@
 <form class="form-signin" action="{{ route('store') }}" method="POST" id="create-link-form">
     <h1>{{ __('link.header') }}</h1>
     <div class="input-group mb-3">
-        <input type="text" class="form-control" id="link" placeholder="{{ __('link.input') }}" autofocus="autofocus" name="link" value="https://pikabu.ru/@1338">
+        <input type="text" class="form-control" id="link" placeholder="{{ __('link.input') }}" autofocus="autofocus" name="link" value="https://gitlab.com/13338/lurl">
         <div class="input-group-append">
             <button class="btn btn-dark" id="submit" type="button">{{ __('link.create') }}</button>
         </div>
