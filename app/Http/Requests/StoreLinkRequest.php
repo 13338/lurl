@@ -34,7 +34,7 @@ class StoreLinkRequest extends FormRequest
     {
         return [
             'link' => ['required', 'min:1', 'max:'.self::MAX_URL_LENGTH, new BlackList],
-            'short' => 'unique:links',
+            'short' => ['unique:links', 'min:1', 'max:255'],
         ];
     }
 }
