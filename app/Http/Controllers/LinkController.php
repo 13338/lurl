@@ -45,6 +45,7 @@ class LinkController extends Controller
     {
         $link = Link::where('short', $link)
             ->where('expired_at', '>=', Carbon::now())
+            ->orWhereNull('expired_at')
             ->firstOrFail();
         return Redirect::to($link->link);
     }
