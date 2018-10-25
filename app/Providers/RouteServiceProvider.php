@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Link;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,7 +25,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::bind('link', function ($value) {
+            return Link::where('short', $value)
+                ->where(function($query) {
+                    return $query->where('expired_at', '>=', Carbon::now())
+                        ->orWhereNull('expired_at');
+                })
+                ->firstOrFail();
+        });
 
         parent::boot();
     }
