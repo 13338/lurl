@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLinkRequest;
 use App\Link;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 class LinkController extends Controller
@@ -24,10 +26,12 @@ class LinkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLinkRequest $request)
     {
         $link = new Link($request->all());
-        $link->short = $this->generateRandomString(5);
+        if (!$request->short) {
+            $link->short = $this->generateRandomString(5);
+        }
         $link->save();
         return $link;
     }
@@ -41,6 +45,8 @@ class LinkController extends Controller
     public function show($link)
     {
         $link = Link::where('short', $link)
+            ->where('expired_at', '>=', Carbon::now())
+            ->orWhereNull('expired_at')
             ->firstOrFail();
         return Redirect::to($link->link);
     }
